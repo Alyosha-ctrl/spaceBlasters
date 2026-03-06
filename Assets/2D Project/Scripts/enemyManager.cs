@@ -9,7 +9,7 @@ public class enemyManager : MonoBehaviour
     float time = 0f;
 
     float moveTime = 0f;
-    float moveInterval = 1f;
+    public float moveInterval = 1f;
 
     public GameObject bulletPrefab;
 
@@ -47,7 +47,7 @@ public class enemyManager : MonoBehaviour
     {
         Debug.Log("No shooting yet");
 
-        UnityEngine.Vector3 shootPostition = new UnityEngine.Vector3(0,0,0);
+        UnityEngine.Vector3 shootPostition = new UnityEngine.Vector3(100,0,0);
 
         //Make a list of all your children and use a random ones position as a anchor for getting shot.
         foreach (Transform child in transform)
@@ -94,5 +94,6 @@ public class enemyManager : MonoBehaviour
     void OnEnemyDeath(int points)
         {
             moveInterval *= .9f;
+            gunInterval *= .9f;
         }
 }
