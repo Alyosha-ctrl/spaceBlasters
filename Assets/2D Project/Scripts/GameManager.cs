@@ -14,9 +14,6 @@ public class GameManager : MonoBehaviour
     //Replace that high score with loading from player prefs
     int highScore = 0;
 
-    //Have an interval in her that tells a random enemy to shoot.
-    float shootInterval = 5;
-
     void Start()
     {
        // todo - sign up for notification about enemy death 

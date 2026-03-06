@@ -34,32 +34,32 @@ public class Enemy : MonoBehaviour
 
     void Update()
     {
-        //Do stuff with time
-        time += Time.deltaTime;
+        // //Do stuff with time
+        // time += Time.deltaTime;
 
-        //Every interval move to the direction if not on the edge
-        //If on edge go down.
-        if(time >= interval)
-        {
-            time = 0;
-            // UnityEngine.Debug.Log("Movement activated");            //Get the position
-            Vector2 position = GetComponent<Transform>().position;
-            //Move to next animation position
+        // //Every interval move to the direction if not on the edge
+        // //If on edge go down.
+        // if(time >= interval)
+        // {
+        //     time = 0;
+        //     // UnityEngine.Debug.Log("Movement activated");            //Get the position
+        //     Vector2 position = GetComponent<Transform>().position;
+        //     //Move to next animation position
 
-            //if direction is negative check the left
-            if((direction < 0 && position.x <= -15) || (direction > 0 && position.x >= 15))
-            {
-                // UnityEngine.Debug.Log("Down activated"); 
-                position.y -= 1.5f;
-                direction *= -1;
-            }
-            else
-            {
-                position.x += direction;
-            }
+        //     //if direction is negative check the left
+        //     if((direction < 0 && position.x <= -15) || (direction > 0 && position.x >= 15))
+        //     {
+        //         // UnityEngine.Debug.Log("Down activated"); 
+        //         position.y -= 1.5f;
+        //         direction *= -1;
+        //     }
+        //     else
+        //     {
+        //         position.x += direction;
+        //     }
 
-            GetComponent<Transform>().position = position;
-        }
+        //     GetComponent<Transform>().position = position;
+        // }
     }
 
     void OnDestroy()
