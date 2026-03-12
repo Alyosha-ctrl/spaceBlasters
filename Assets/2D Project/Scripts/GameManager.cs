@@ -10,6 +10,8 @@ public class GameManager : MonoBehaviour
 
     public TextMeshProUGUI scoreText;
     public TextMeshProUGUI highScoreText;
+    public AudioSource kaboom;
+    // public static GameManager Instance{get; private set;}
     int score = 0;
 
     int death_counter = 0;
@@ -17,10 +19,13 @@ public class GameManager : MonoBehaviour
     //Replace that high score with loading from player prefs
     int highScore = 0;
 
+    
     void Start()
     {
+        
        // todo - sign up for notification about enemy death 
        Enemy.OnEnemyDeath += OnEnemyDeath;
+       kaboom = GetComponent<AudioSource>();
        highScore = PlayerPrefs.GetInt("highScore", 0);
        string dummyHighScore = highScoreText.text;
        dummyHighScore = String.Format("High Score: {0:0000}", highScore);
@@ -31,6 +36,7 @@ public class GameManager : MonoBehaviour
     {
         // Debug.Log("Enemy Died");
         // Debug.Log(points);
+        kaboom.Play();
         death_counter += 1;
         score += points;
         string dummyScore = "Score:" + score;
@@ -55,28 +61,27 @@ public class GameManager : MonoBehaviour
          }
         scoreText.text = dummyScore;
         highScoreText.text = dummyHighScore;
-        if(death_counter >= 12)
-        {
-            loadCredits();
-        }
+        // if(death_counter >= 14)
+        // {
+        //     loadCredits();
+        // }
     }
 
-    public void loadCredits()
-    {
-        StartCoroutine(LoadCredits());
+    // public void loadCredits()
+    // {
+    //     StartCoroutine(LoadCredits());
         
 
-        IEnumerator LoadCredits()
-        {
-            //Load the game in here.
-            Debug.Log("Loaded Game");
-            //get the other scene of the tag.
-            AsyncOperation loadOperation = SceneManager.LoadSceneAsync("End");
-            while(!loadOperation!.isDone) yield return null;
+    //     IEnumerator LoadCredits()
+    //     {
+    //         //Load the game in here.
+    //         Debug.Log("Loaded Game");
+    //         //get the other scene of the tag.
+    //         AsyncOperation loadOperation = SceneManager.LoadSceneAsync("End");
+    //         while(!loadOperation!.isDone) yield return null;
 
 
-            GameObject pl = GameObject.Find("Player");
-            Debug.Log(pl.name);
-        }
-    }
+    //         GameObject pl = GameObject.Find("Player");
+    //     }
+    // }
 }

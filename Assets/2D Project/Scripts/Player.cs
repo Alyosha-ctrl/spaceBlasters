@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using System.Collections;
+using System.Threading.Tasks;
 
 public class Player : MonoBehaviour
 {
@@ -13,6 +14,9 @@ public class Player : MonoBehaviour
     public float speed = 10f;
 
     public float dashDistance = 30;
+
+    public AudioSource ow;
+     public AudioSource pew;
 
     bool dash = true;
 
@@ -33,6 +37,7 @@ public class Player : MonoBehaviour
             // todo - trigger shoot animation
             Animator animator = GetComponent<Animator>();
             animator.SetTrigger("Shoot");
+            pew.Play();
         }
         int direction = 0;
         if (Keyboard.current.aKey.isPressed)
@@ -62,26 +67,18 @@ public class Player : MonoBehaviour
         }
     }
 
-    void OnCollisionEnter2D(Collision2D collision)
-    {
-        UnityEngine.Debug.Log("Ouch!");
-        
-        // todo - destroy the bullet
-        if(collision.gameObject.layer == 6) {
-            Destroy(collision.gameObject);
-            
-            // todo - trigger death animation
-            Destroy(this.gameObject);
-        }
-    }
-
     void OnTriggerEnter2D(Collider2D collision)
     {
         if(collision.gameObject.layer == 3 || collision.gameObject.layer == 6) {
             //Try to do something to set score to zero.
-            loadCredits();
+            Debug.Log("Killed Player");
+            ow.Play();
+            Animator animator = GetComponent<Animator>();
+            animator.SetTrigger("dead");
+            
             Destroy(collision.gameObject);
-            Destroy(this.gameObject);
+            // Destroy(this.gameObject, 1f);
+            Invoke("loadCredits", 2.1f);
         }
     }
 
@@ -92,6 +89,7 @@ public class Player : MonoBehaviour
 
     public void loadCredits()
     {
+        Debug.Log("inside Load Credits");
         StartCoroutine(LoadCredits());
         
 

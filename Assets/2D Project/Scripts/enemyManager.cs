@@ -13,6 +13,8 @@ public class enemyManager : MonoBehaviour
 
     public GameObject bulletPrefab;
 
+    public AudioSource hsus;
+
     int direction = 1;
 
     bool switching = false;
@@ -45,19 +47,25 @@ public class enemyManager : MonoBehaviour
 
     void shoot()
     {
-        Debug.Log("No shooting yet");
+        // Debug.Log("No shooting yet");
+        hsus.Play();
+
+        
 
         UnityEngine.Vector3 shootPostition = new UnityEngine.Vector3(100,0,0);
+        Animator animator = GetComponentInChildren<Animator>();
 
         //Make a list of all your children and use a random ones position as a anchor for getting shot.
         foreach (Transform child in transform)
         {
             shootPostition = child.position;
-        }
+            animator = child.gameObject.GetComponent<Animator>();
             
+        }
+        animator.SetTrigger("shoot");
 
         GameObject shot = Instantiate(bulletPrefab, shootPostition, UnityEngine.Quaternion.identity);
-        Debug.Log("Bang!");
+        // Debug.Log("Bang!");
 
         // todo - destroy the bullet after 3 seconds
         Destroy(shot, 3f);

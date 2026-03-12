@@ -21,14 +21,17 @@ public class Enemy : MonoBehaviour
     void OnCollisionEnter2D(Collision2D collision)
     {
         UnityEngine.Debug.Log("Ouch!");
+        Animator animator = GetComponent<Animator>();
+        animator.SetTrigger("dead");
         
         // todo - destroy the bullet
         if(collision.gameObject.layer == 3) {
+            OnEnemyDeath?.Invoke(enemyType);
             Destroy(collision.gameObject);
             
             // todo - trigger death animation
-            Destroy(this.gameObject);
-            OnEnemyDeath?.Invoke(enemyType);
+            Destroy(this.gameObject,1.2f);
+            
         }
     }
 
