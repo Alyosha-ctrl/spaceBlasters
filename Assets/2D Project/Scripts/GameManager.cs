@@ -3,13 +3,16 @@ using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UIElements;
-
+using UnityEngine.SceneManagement;
+using System.Collections;
 public class GameManager : MonoBehaviour
 {
 
     public TextMeshProUGUI scoreText;
     public TextMeshProUGUI highScoreText;
     int score = 0;
+
+    int death_counter = 0;
 
     //Replace that high score with loading from player prefs
     int highScore = 0;
@@ -28,6 +31,7 @@ public class GameManager : MonoBehaviour
     {
         // Debug.Log("Enemy Died");
         // Debug.Log(points);
+        death_counter += 1;
         score += points;
         string dummyScore = "Score:" + score;
         string dummyHighScore = highScoreText.text;
@@ -51,6 +55,28 @@ public class GameManager : MonoBehaviour
          }
         scoreText.text = dummyScore;
         highScoreText.text = dummyHighScore;
-        //Also tell all the enemies to speed up by lowering the interval by timesing it by .1
+        if(death_counter >= 12)
+        {
+            loadCredits();
+        }
+    }
+
+    public void loadCredits()
+    {
+        StartCoroutine(LoadCredits());
+        
+
+        IEnumerator LoadCredits()
+        {
+            //Load the game in here.
+            Debug.Log("Loaded Game");
+            //get the other scene of the tag.
+            AsyncOperation loadOperation = SceneManager.LoadSceneAsync("End");
+            while(!loadOperation!.isDone) yield return null;
+
+
+            GameObject pl = GameObject.Find("Player");
+            Debug.Log(pl.name);
+        }
     }
 }

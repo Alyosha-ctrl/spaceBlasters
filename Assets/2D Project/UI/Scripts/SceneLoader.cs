@@ -23,4 +23,23 @@ public class SceneLoader : MonoBehaviour
             Debug.Log(pl.name);
         }
     }
+
+    public void loadCredits()
+    {
+        StartCoroutine(LoadCredits());
+        
+
+        IEnumerator LoadCredits()
+        {
+            //Load the game in here.
+            Debug.Log("Loaded Game");
+            //get the other scene of the tag.
+            AsyncOperation loadOperation = SceneManager.LoadSceneAsync("End");
+            while(!loadOperation!.isDone) yield return null;
+
+
+            GameObject pl = GameObject.Find("Player");
+            Debug.Log(pl.name);
+        }
+    }
 }

@@ -2,6 +2,8 @@
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
+using System.Collections;
 
 public class Player : MonoBehaviour
 {
@@ -76,6 +78,8 @@ public class Player : MonoBehaviour
     void OnTriggerEnter2D(Collider2D collision)
     {
         if(collision.gameObject.layer == 3 || collision.gameObject.layer == 6) {
+            //Try to do something to set score to zero.
+            loadCredits();
             Destroy(collision.gameObject);
             Destroy(this.gameObject);
         }
@@ -84,5 +88,24 @@ public class Player : MonoBehaviour
     void resetDash()
     {
         dash = true;
+    }
+
+    public void loadCredits()
+    {
+        StartCoroutine(LoadCredits());
+        
+
+        IEnumerator LoadCredits()
+        {
+            //Load the game in here.
+            Debug.Log("Loaded Game");
+            //get the other scene of the tag.
+            AsyncOperation loadOperation = SceneManager.LoadSceneAsync("End");
+            while(!loadOperation!.isDone) yield return null;
+
+
+            GameObject pl = GameObject.Find("Player");
+            Debug.Log(pl.name);
+        }
     }
 }
